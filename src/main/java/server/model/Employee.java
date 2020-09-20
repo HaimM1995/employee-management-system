@@ -20,12 +20,7 @@ public class Employee {
     }
 
     @Id
-    @GeneratedValue(generator = "employee_generator")
-    @SequenceGenerator(
-            name = "employee_generator",
-            sequenceName = "employee_generator",
-            initialValue = 1
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "first_name")
@@ -36,4 +31,14 @@ public class Employee {
 
     @Column(name = "email")
     private String email;
+
+//    @GeneratedValue(generator = "employee_generator")
+//    @SequenceGenerator(
+//            name = "employee_generator",
+//            sequenceName = "employee_generator",
+//            initialValue = 1
+//    )
+//    public Integer getId() {
+//        return id;
+//    }
 }

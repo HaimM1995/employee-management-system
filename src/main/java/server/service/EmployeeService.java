@@ -17,4 +17,12 @@ public class EmployeeService {
         return this.employeeRepository.findAll();
     }
 
+    public Employee getEmployee(int id) {
+        return this.employeeRepository.findById(id).orElseThrow();
+    }
+
+    public Employee createEmployee(Employee employee){
+        return this.employeeRepository.save(employee);
+    }
+
 }
