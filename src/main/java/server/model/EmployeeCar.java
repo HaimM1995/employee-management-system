@@ -19,17 +19,8 @@ public class EmployeeCar {
     @Column(name = "year")
     int year;
 
-    @OneToOne(mappedBy = "employeeCar", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "employeeCar")
     Employee carOwner;
-    public EmployeeCar() {
-    }
-
-    public EmployeeCar(int id, String type, String color, int year) {
-        this.id = id;
-        this.type = type;
-        this.color = color;
-        this.year = year;
-    }
 
     public int getId() {
         return id;

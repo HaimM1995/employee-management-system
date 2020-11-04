@@ -1,7 +1,9 @@
 package server.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "factory")
@@ -17,15 +19,13 @@ public class Factory {
     String factoryAddress;
 
     @OneToMany(mappedBy = "factory", fetch = FetchType.LAZY)
-    List<Employee> employeeList;
+    Set<Employee> employeeList = new HashSet<Employee>();
 
-    public Factory() {
+    public Set<Employee> getEmployeeList() {
+        return employeeList;
     }
 
-    public Factory(Integer id, String factoryName, String factoryAddress, List<Employee> employeeList) {
-        this.id = id;
-        this.factoryName = factoryName;
-        this.factoryAddress = factoryAddress;
+    public void setEmployeeList(Set<Employee> employeeList) {
         this.employeeList = employeeList;
     }
 
@@ -35,14 +35,6 @@ public class Factory {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public List<Employee> getEmployeeList() {
-        return employeeList;
-    }
-
-    public void setEmployeeList(List<Employee> employeeList) {
-        this.employeeList = employeeList;
     }
 
     public String getFactoryName() {

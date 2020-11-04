@@ -1,6 +1,7 @@
 package server.model;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,6 +17,12 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "age")
+    Integer age;
+
+    @Column(name = "birthDate")
+    LocalDateTime birthDate;
+
     @Column(name = "first_name")
     private String firstName;
 
@@ -25,6 +32,7 @@ public class Employee {
     @Column(name = "email")
     private String email;
 
+    //@DateTimeFormat(pattern = "DD/MM/YYYY")
     @Column(name = "createdAt")
     private LocalDateTime createdAt;
 
@@ -37,34 +45,38 @@ public class Employee {
     @ManyToOne(cascade = CascadeType.ALL)
     Factory factory;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)// Many to Many defults fetch = FetchType.LAZY
     @JoinTable(name = "company_employee",
             joinColumns = {@JoinColumn(name = "employee_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "comapny_id", referencedColumnName = "id")})
-    List<Company> companyList;
-//    Set<Company> companyList = new HashSet<>();
+    Set<Company> companyList = new HashSet<Company>();
+    //List<Company> companyList;
 
-    public Employee() {
-    }
-
-    public Employee(Integer id, String firstName, String lastName, String email, LocalDateTime createdAt, LocalDateTime updatedAt, EmployeeCar employeeCar, Factory factory, List<Company> companyList) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.employeeCar = employeeCar;
-        this.factory = factory;
-        this.companyList = companyList;
-    }
-
-    public List<Company> getCompanyList() {
+    public Set<Company> getCompanyList() {
         return companyList;
     }
 
-    public void setCompanyList(List<Company> companyList) {
+    public void setCompanyList(Set<Company> companyList) {
         this.companyList = companyList;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public LocalDateTime getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDateTime birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public Employee() {
     }
 
     public Factory getFactory() {

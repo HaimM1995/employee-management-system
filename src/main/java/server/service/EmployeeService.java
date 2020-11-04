@@ -1,9 +1,6 @@
 package server.service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +9,12 @@ import server.exception.ResourceNotFoundException;
 import server.model.Employee;
 import server.repository.EmployeeRepository;
 
+import javax.annotation.PostConstruct;
+
 @Service
 public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
-
-    public EmployeeService() {
-    }
 
     public List<Employee> getAllEmployees() {
         return this.employeeRepository.findAll();
@@ -35,8 +31,8 @@ public class EmployeeService {
 //        return ResponseEntity.ok(employee);
 //    }
 
-    public Employee saveEmployee(Employee employee) {
-        return (Employee)this.employeeRepository.save(employee);
+    public Optional<Employee> saveEmployee(Employee employee) {
+        return Optional.of((Employee)this.employeeRepository.save(employee));
     }
 
     public Optional<Employee> updateEmployeeById(int id, Employee employee) {
@@ -46,7 +42,7 @@ public class EmployeeService {
                     setFirstName(employee.getFirstName()).
                     setLastName(employee.getLastName()).
                     setEmail(employee.getEmail());
-            return Optional.of(this.saveEmployee(employeeToUpdate.get()));
+            return this.saveEmployee(employeeToUpdate.get());
         } else {
             return Optional.empty();
         }

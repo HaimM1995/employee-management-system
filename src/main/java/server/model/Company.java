@@ -19,23 +19,15 @@ public class Company {
     @Column(name = "companyLogo")
     String companyLogo;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "companyList")
-    List<Employee> employeeList;
-    //Set<Employee> employeeList = new HashSet<>();
+    @ManyToMany(mappedBy = "companyList", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    Set<Employee> employeeList = new HashSet<Employee>();
+    //List<Employee> employeeList;
 
-
-    public Company(Integer id, String companyName, String companyLogo, List<Employee> employeeList) {
-        this.id = id;
-        this.companyName = companyName;
-        this.companyLogo = companyLogo;
-        this.employeeList = employeeList;
-    }
-
-    public List<Employee> getEmployeeList() {
+    public Set<Employee> getEmployeeList() {
         return employeeList;
     }
 
-    public void setEmployeeList(List<Employee> employeeList) {
+    public void setEmployeeList(Set<Employee> employeeList) {
         this.employeeList = employeeList;
     }
 
